@@ -114,3 +114,52 @@
     flex-direction: column;
   }
 }
+
+.drag__container {
+  height: 100%;
+  width: 100%;
+  min-height: 300px;
+  min-width: 300px;
+  background-color: grey;
+}
+
+.drag__image {
+  width: 200px;
+  margin: 10px
+}
+
+.drag__title {
+  font-size: 3rem;
+  text-align: center;
+  padding: 20px 0;
+}
+/*
+.input-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-time button {
+  width: 300px;
+  font-size: 5rem;
+  margin: 5px 10px;
+}
+.input-time input {
+  border-style: none;
+  background: transparent;
+  outline: none;
+  -moz-appearance: textfield;
+  border: 5px blue solid;
+  margin: 5px 10px;
+  font-size: 5rem;
+  width: 100px;
+  padding: 10px;
+}
+.input__minutes {
+
+}
+.input-time__colon {
+  font-size: 5rem;
+}
+*/
