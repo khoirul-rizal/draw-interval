@@ -61,7 +61,10 @@
   border-radius: 5px;
   padding: 0.75rem;
   font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+  font-family: Menlo,
+    Monaco,
+    Lucida Console,
+    Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
 }
 
@@ -120,12 +123,11 @@
   width: 100%;
   min-height: 300px;
   min-width: 300px;
-  background-color: grey;
 }
 
 .drag__image {
   width: 200px;
-  margin: 10px
+  margin: 10px;
 }
 
 .drag__title {
@@ -133,6 +135,7 @@
   text-align: center;
   padding: 20px 0;
 }
+
 /*
 .input-time {
   display: flex;
@@ -162,4 +165,5 @@
 .input-time__colon {
   font-size: 5rem;
 }
+
 */
