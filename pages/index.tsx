@@ -6,11 +6,11 @@ import styles from '../styles/Home.module.css'
 import { MantineProvider, Button, Container, Box, Image, Grid, ScrollArea, MediaQuery, SimpleGrid, Overlay, CloseButton } from '@mantine/core'
 
   /*TODO
-  1. SOP or REGEX listening SRC IMAGE
-  2. Delete Image
-  3. Duplicate Image
-  4. Input Auto Next
-  5. Empty Image
+  []. SOP or REGEX listening SRC IMAGE
+  [X]. Delete Image
+  []. Duplicate Image
+  [x]. Input Auto Next
+  []. Empty Image
     */
 
 const DragOverListener = (e: any) => {
@@ -57,14 +57,10 @@ const App: NextPage = () => {
     setImageURL([...imageURLs, imgURL])
   }
 
-  const DeleteImage = (index: number) => {
-    setImageURL(imageURLs.splice(index, 1))
-  }
   useEffect(() => {
-    // initiliaze
-    console.log('useEfffect')
-    if (!imageURLs.length && sessionStorage.getItem('state')) {
-      setImageURL(JSON.parse(sessionStorage.getItem('state') || ''))
+    console.log(sessionStorage.getItem('state'))
+    if (!imageURLs.length && sessionStorage.getItem('state') && !sessionStorage.getItem('state')?.length) {
+      setImageURL(JSON.parse(sessionStorage.getItem('state') || '') || [])
     } 
   }, [imageURLs])
 
@@ -86,9 +82,9 @@ const App: NextPage = () => {
         >
          <div>
           Timer
-          <Link href="/activity?1"><Button onClick={() => SetTimer('60')} variant="outline" style={{ margin: 10 }}>1 Minutes</Button></Link>
-          <Link href="/activity?2"><Button onClick={() => SetTimer('180')} variant="outline" style={{ margin: 10 }}>3 Minutes</Button></Link>
-          <Link href="/activity?3"><Button onClick={() => SetTimer('300')} variant="outline" style={{ margin: 10 }}>5 Minutes</Button></Link>
+          <Link href="/activity"><Button disabled={imageURLs.length === 0} onClick={() => SetTimer('20')} variant="outline" style={{ margin: 10 }}>20 Seconds</Button></Link>
+          <Link href="/activity"><Button disabled={imageURLs.length === 0} onClick={() => SetTimer('60')} variant="outline" style={{ margin: 10 }}>60 Seconds</Button></Link>
+          <Link href="/activity"><Button disabled={imageURLs.length === 0} onClick={() => SetTimer('150')} variant="outline" style={{ margin: 10 }}>150 Seconds</Button></Link>
          </div>
         <Box
           sx = {theme => ({
