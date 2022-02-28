@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 import { MantineProvider, Button, Container, Box, Image, Grid, ScrollArea, MediaQuery, SimpleGrid, Overlay, CloseButton } from '@mantine/core'
+import { useNotifications, NotificationsProvider  } from '@mantine/notifications'
 
   /*TODO
   []. SOP or REGEX listening SRC IMAGE
@@ -24,12 +25,15 @@ const Index: NextPage = () => {
       colorScheme: 'dark',
       }}
      >
-      <App />
+       <NotificationsProvider>
+          <App />
+       </NotificationsProvider>
     </MantineProvider>
   )
 }
 const App: NextPage = () => {
   const [imageURLs, setImageURL] = useState<string[]>([])
+  const notifications = useNotifications()
   const DropListener = (e: any) => {
     e.stopPropagation();
     e.preventDefault(); 
@@ -38,16 +42,14 @@ const App: NextPage = () => {
 
     let imgURL: string = ''
     imgURL = src.split('srcset')[1].split('"')[1].split(' ')[6]
-    sessionStorage.setItem('state', JSON.stringify([...imageURLs, imgURL]));
-    setImageURL([...imageURLs, imgURL])
+    AddImage([imgURL])
   }
 
   useEffect(() => {
-    console.log(sessionStorage.getItem('state'))
-    if (!imageURLs.length && sessionStorage.getItem('state') && !sessionStorage.getItem('state')?.length) {
+    if (!imageURLs.length && sessionStorage.getItem('state') && JSON.parse(sessionStorage.getItem('state') || '[]')?.length ) {
       setImageURL(JSON.parse(sessionStorage.getItem('state') || '') || [])
-    } 
-  }, [imageURLs])
+    }  
+   }, [imageURLs])
 
   const SetTimer = (timer: string) => {
     sessionStorage.setItem('timer', timer);
@@ -65,7 +67,6 @@ const App: NextPage = () => {
   };
 
   const showFile = async () => {
-    alert('a')
     const a = document.createElement('input')
     a.type = 'file'
     a.onchange = (e:any) => { ReadFile(e) }
@@ -79,13 +80,36 @@ const App: NextPage = () => {
     const reader = new FileReader()
     reader.onload = async (e) => { 
       const text = JSON.parse((e.target.result))
-      setImageURL([...imageURLs, ...text])
+      AddImage(text)
     };
     reader.readAsText(e.target.files[0])
   }
 
   const ResetImage = () => {
     setImageURL([])
+    sessionStorage.setItem('state', '[]');
+  }
+  const AddImage = (newImageList:string[]) => {
+    newImageList = [...imageURLs, ...newImageList]
+    if (DuplicateCheck(newImageList)) {
+      notifications.showNotification({
+        title: 'Oops. Duplicated Image',
+        message: 'You have duplicate image, we already reduce it automaticly',
+        color: 'red'
+      })
+      newImageList = newImageList.filter(DuplicateReducer)
+      console.log('newImageList', newImageList)
+    } 
+    if (newImageList.length !== 0) {
+      sessionStorage.setItem('state', JSON.stringify(newImageList));
+      setImageURL(newImageList)
+    }
+  }
+  const DuplicateReducer = (value: string, index: number, self: string[]) => {
+    return self.indexOf(value) === index
+  }
+  const DuplicateCheck = (arr:string[]) => {
+    return new Set(arr).size !== arr.length
   }
 
   return (
