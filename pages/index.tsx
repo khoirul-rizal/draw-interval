@@ -22,21 +22,6 @@ const Index: NextPage = () => {
     theme={{
       fontFamily: 'Open Sans, sans serif',
       colorScheme: 'dark',
-      // colors: {
-      // // override dark colors here to change them for all components
-      //   dark: [
-      //     '#d5d7e0',
-      //     '#acaebf',
-      //     '#8c8fa3',
-      //     '#666980',
-      //     '#4d4f66',
-      //     '#34354a',
-      //     '#2b2c3d',
-      //     '#1d1e30',
-      //     '#0c0d21',
-      //     '#01010a',
-      //   ],
-      // },
       }}
      >
       <App />
@@ -67,6 +52,42 @@ const App: NextPage = () => {
   const SetTimer = (timer: string) => {
     sessionStorage.setItem('timer', timer);
   }
+
+  const SaveFile = () => {
+    const a = document.createElement('a');
+    const blob = new Blob([JSON.stringify(imageURLs, null, 2)], {type: 'application/json'})
+    a.download = 'my-file.txt';
+    a.href = URL.createObjectURL(blob);
+    a.addEventListener('click', (e) => {
+      setTimeout(() => URL.revokeObjectURL(a.href), 30 * 1000);
+    });
+    a.click();
+  };
+
+  const showFile = async () => {
+    alert('a')
+    const a = document.createElement('input')
+    a.type = 'file'
+    a.onchange = (e:any) => { ReadFile(e) }
+    a.addEventListener('click', (e) => {
+      setTimeout(() => {}, 30 * 1000);
+    });
+    a.click();
+  }
+  const ReadFile = (e:any) => {
+      e.preventDefault()
+    const reader = new FileReader()
+    reader.onload = async (e) => { 
+      const text = JSON.parse((e.target.result))
+      setImageURL([...imageURLs, ...text])
+    };
+    reader.readAsText(e.target.files[0])
+  }
+
+  const ResetImage = () => {
+    setImageURL([])
+  }
+
   return (
     <Container 
       sx={theme => ({
@@ -85,6 +106,11 @@ const App: NextPage = () => {
           <Link href="/activity"><Button disabled={imageURLs.length === 0} onClick={() => SetTimer('20')} variant="outline" style={{ margin: 10 }}>20 Seconds</Button></Link>
           <Link href="/activity"><Button disabled={imageURLs.length === 0} onClick={() => SetTimer('60')} variant="outline" style={{ margin: 10 }}>60 Seconds</Button></Link>
           <Link href="/activity"><Button disabled={imageURLs.length === 0} onClick={() => SetTimer('150')} variant="outline" style={{ margin: 10 }}>150 Seconds</Button></Link>
+         </div>
+         <div>
+          <Button onClick={() => showFile()} variant="outline" style={{ margin: 10 }}>Load Image</Button>
+          <Button disabled={imageURLs.length === 0} onClick={() => SaveFile()} variant="outline" style={{ margin: 10 }}>Save Image</Button>
+          <Button disabled={imageURLs.length === 0} onClick={() => ResetImage()} variant="outline" style={{ margin: 10 }}>Reset Image</Button>
          </div>
         <Box
           sx = {theme => ({
