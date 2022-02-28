@@ -67,6 +67,10 @@ const App: NextPage = () => {
       setImageURL(JSON.parse(sessionStorage.getItem('state') || ''))
     } 
   }, [imageURLs])
+
+  const SetTimer = (timer: string) => {
+    sessionStorage.setItem('timer', timer);
+  }
   return (
     <Container 
       sx={theme => ({
@@ -82,9 +86,9 @@ const App: NextPage = () => {
         >
          <div>
           Timer
-          <Link href="/activity"><Button variant="outline" style={{ margin: 10 }}>1 Minutes</Button></Link>
-          <Link href="/activity"><Button variant="outline" style={{ margin: 10 }}>3 Minutes</Button></Link>
-          <Link href="/activity"><Button variant="outline" style={{ margin: 10 }}>5 Minutes</Button></Link>
+          <Link href="/activity?1"><Button onClick={() => SetTimer('60')} variant="outline" style={{ margin: 10 }}>1 Minutes</Button></Link>
+          <Link href="/activity?2"><Button onClick={() => SetTimer('180')} variant="outline" style={{ margin: 10 }}>3 Minutes</Button></Link>
+          <Link href="/activity?3"><Button onClick={() => SetTimer('300')} variant="outline" style={{ margin: 10 }}>5 Minutes</Button></Link>
          </div>
         <Box
           sx = {theme => ({
