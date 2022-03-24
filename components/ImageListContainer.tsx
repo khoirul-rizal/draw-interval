@@ -1,8 +1,5 @@
-import type { NextPage } from 'next'
 import styles from '../styles/Home.module.css'
-import { useEffect, useLayoutEffect, useState } from 'react'
 import { Box, Image, ScrollArea, SimpleGrid, CloseButton } from '@mantine/core'
-import { useNotifications, NotificationsProvider } from '@mantine/notifications'
 
 type DropListener = (a: any) => void
 type DragOverListener = (a: any) => void
@@ -21,15 +18,20 @@ const ImageListContainer = ({ DropListener, DragOverListener, imageURLs, setImag
       sx={theme => ({
         padding: theme.spacing.md,
         borderRadius: theme.radius.md,
-        marginTop: theme.spacing.md,
-        backgroundColor: theme.colors.dark[3]
+        backgroundColor: theme.colors.dark[5],
+        margin: "auto",
+        color: "white"
       })}
+      style={{ width: '90%' }}
       onDrop={DropListener}
-      onDragOver={DragOverListener}
-      className={styles.drag__container}>
-      <div className={styles.drag__title}>Drop Your Image Here</div>
+      onDragOver={DragOverListener} >
+      <Box
+         style={{fontSize: "3rem", marginBottom:10, textAlign:"center", }}
+       >
+         Drop Your Image Here
+      </Box>
       <ScrollArea
-        style={{ height: "70vh" }} >
+        style={{ height: "80vh", margin:"10px" }} >
         <SimpleGrid
           cols={4}
           breakpoints={[
@@ -51,7 +53,6 @@ const ImageListContainer = ({ DropListener, DragOverListener, imageURLs, setImag
                       setImageURL([...image])
                       this
                     }}
-                    color="gray"
                     style={{ zIndex: 3, position: 'absolute', right: 0, opacity: 0.3 }} />
                   <Image
                     radius="md"

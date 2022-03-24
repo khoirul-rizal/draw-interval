@@ -3,6 +3,7 @@ import { MantineProvider } from '@mantine/core'
 import { NotificationsProvider } from '@mantine/notifications'
 import MainPage from '../components/MainPage'
 
+
 const Index: NextPage = () => {
   return (
     <MantineProvider
