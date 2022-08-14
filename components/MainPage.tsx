@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { Box, Container } from '@mantine/core'
 import ImageListContainer from './ImageListContainer'
 import TimerOptions from './TimerOptions'
-import { useEffect, useState } from 'react'
+import { DragEventHandler, useEffect, useState } from 'react'
 import { useNotifications } from '@mantine/notifications'
 import Header from './Header'
 

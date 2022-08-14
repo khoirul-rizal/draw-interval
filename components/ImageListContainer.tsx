@@ -1,5 +1,5 @@
-import styles from '../styles/Home.module.css'
 import { Box, Image, ScrollArea, SimpleGrid, CloseButton } from '@mantine/core'
+import { DragEventHandler } from 'react'
 
 type DropListener = (a: any) => void
 type DragOverListener = (a: any) => void
@@ -43,7 +43,7 @@ const ImageListContainer = ({ DropListener, DragOverListener, imageURLs, setImag
           {
             imageURLs.map((url, index) => {
               return (
-                <div key={index} style={{ margin: "auto", height: "100%", position: 'relative' }}>
+                <div key={url} style={{ margin: "auto", height: "100%", position: 'relative' }}>
                   <CloseButton
                     onClick={() => {
                       const image: string[] = imageURLs
